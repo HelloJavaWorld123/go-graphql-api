@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"github.com/HelloJavaWorld123/go-graphql-api/utils"
 	"time"
 )
 
@@ -30,7 +31,7 @@ func NewConnection(connectionParam string) (*Db, error) {
 }
 
 func ConnectParam(host string, port int64, userName string, dbName string) (string, error) {
-	if host == "" || userName == "" || dbName == "" || port < 0 {
+	if utils.StringAnyEmpty(host, userName, dbName) || port < 0 {
 		return "", errors.New("缺少数据库连接的参数")
 	}
 	return fmt.Sprintf("host=%s port=%d username=%s dbname=%s sslmode=disable", host, port, userName, dbName), nil
