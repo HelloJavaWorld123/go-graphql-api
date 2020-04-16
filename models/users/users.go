@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/HelloJavaWorld123/go-graphql-api/postgres"
 	"github.com/HelloJavaWorld123/go-graphql-api/utils"
+	"github.com/graphql-go/graphql"
 )
 
 type User struct {
@@ -13,6 +14,30 @@ type User struct {
 	Profession string
 	Friendly   bool
 }
+
+var QueryUser = graphql.NewObject(
+	graphql.ObjectConfig{
+		Description: "查询",
+		Name:        "user",
+		Fields: &graphql.Fields{
+			"id": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"age": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"profession": &graphql.Field{
+				Type: graphql.String,
+			},
+			"friendly": &graphql.Field{
+				Type: graphql.Boolean,
+			},
+		},
+	},
+)
 
 //根据用户名称 查找相关用户信息
 func ListUsersByName(userName string, db *postgres.Db) ([]User, error) {

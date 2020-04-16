@@ -1,6 +1,7 @@
 package gql
 
 import (
+	"github.com/HelloJavaWorld123/go-graphql-api/models/users"
 	"github.com/HelloJavaWorld123/go-graphql-api/postgres"
 	"github.com/graphql-go/graphql"
 )
@@ -18,7 +19,7 @@ func NewRoot(db *postgres.Db) *Root {
 				Name: "Query",
 				Fields: graphql.Fields{
 					"users": &graphql.Field{
-						Type: graphql.NewList(User),
+						Type: graphql.NewList(users.QueryUser),
 						Args: graphql.FieldConfigArgument{
 							"name": &graphql.ArgumentConfig{
 								Type: graphql.String,

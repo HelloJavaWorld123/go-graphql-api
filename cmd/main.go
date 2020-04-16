@@ -19,7 +19,6 @@ func main() {
 	err := http.ListenAndServe(":18080", router)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 }
 
@@ -34,9 +33,7 @@ func initializeApi() (*postgres.Db, *chi.Mux) {
 	connectParam, err := postgres.ConnectParam(host, port, userName, password, dbName)
 	if err != nil {
 		log.Fatal(err)
-		return nil, nil
 	}
-
 	db, err := postgres.NewConnection(connectParam)
 	if err != nil {
 		log.Fatal(err)
