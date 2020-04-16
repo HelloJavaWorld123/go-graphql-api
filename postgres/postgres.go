@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/HelloJavaWorld123/go-graphql-api/utils"
+	_ "github.com/lib/pq"
 	"time"
 )
 
@@ -13,6 +14,9 @@ type Db struct {
 }
 
 func NewConnection(connectionParam string) (*Db, error) {
+	if utils.StringEmpty(connectionParam) {
+		return nil, errors.New("链接参数不能为空")
+	}
 	db, err := sql.Open("postgres", connectionParam)
 	if err != nil {
 		return nil, errors.New(err.Error())
@@ -30,9 +34,9 @@ func NewConnection(connectionParam string) (*Db, error) {
 	return &Db{DB: db}, nil
 }
 
-func ConnectParam(host string, port int64, userName string, dbName string) (string, error) {
+func ConnectParam(host string, port int64, userName string, password string, dbName string) (string, error) {
 	if utils.StringAnyEmpty(host, userName, dbName) || port < 0 {
 		return "", errors.New("缺少数据库连接的参数")
 	}
-	return fmt.Sprintf("host=%s port=%d username=%s dbname=%s sslmode=disable", host, port, userName, dbName), nil
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, userName, password, dbName), nil
 }
